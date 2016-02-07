@@ -1,7 +1,7 @@
 FROM alpine:3.3
 MAINTAINER jp@roemer.im
 
-# Install system utils & Gogs runtime dependencies
+# Install system utils & Gogs runtime dependencies
 ADD https://github.com/tianon/gosu/releases/download/1.6/gosu-amd64 /usr/sbin/gosu
 RUN echo "@edge http://dl-4.alpinelinux.org/alpine/edge/main" | tee -a /etc/apk/repositories \
  && apk -U --no-progress upgrade \
@@ -14,10 +14,13 @@ COPY . /app/gogs/
 WORKDIR /app/gogs/
 RUN ./docker/build.sh
 
-# Configure LibC Name Service
+# Configure LibC Name Service
 COPY docker/nsswitch.conf /etc/nsswitch.conf
 
-# Configure Docker Container
+# Thingswise default config
+COPY docker/default.ini /default.ini
+
+# Configure Docker Container
 VOLUME ["/data"]
 EXPOSE 22 3000
 ENTRYPOINT ["docker/start.sh"]

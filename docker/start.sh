@@ -23,7 +23,7 @@ EOT
 }
 
 cleanup() {
-    # Cleanup SOCAT services and s6 event folder
+    # Cleanup SOCAT services and s6 event folder
     # On start and on shutdown in case container has been killed
     rm -rf $(find /app/gogs/docker/s6/ -name 'event')
     rm -rf /app/gogs/docker/s6/SOCAT_*
@@ -46,6 +46,10 @@ if [ "$LINK" = "false" -o "$LINK" = "0" ]; then
     echo "init:socat  | Will not try to create socat links as requested" 1>&2
 else
     create_socat_links
+fi
+
+if ! test -f /data/gogs/conf/app.ini; then
+  cp /default.ini /data/gogs/conf/app.ini
 fi
 
 # Exec CMD or S6 by default if nothing present
