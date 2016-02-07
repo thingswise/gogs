@@ -454,6 +454,7 @@ var Service struct {
 	EnableReverseProxyAuth         bool
 	EnableReverseProxyAutoRegister bool
 	EnableCaptcha                  bool
+	MakeAutoRegisteredUsersAdmins  bool
 }
 
 func newService() {
@@ -466,6 +467,7 @@ func newService() {
 	Service.EnableCacheAvatar = sec.Key("ENABLE_CACHE_AVATAR").MustBool()
 	Service.EnableReverseProxyAuth = sec.Key("ENABLE_REVERSE_PROXY_AUTHENTICATION").MustBool()
 	Service.EnableReverseProxyAutoRegister = sec.Key("ENABLE_REVERSE_PROXY_AUTO_REGISTRATION").MustBool()
+	Service.MakeAutoRegisteredUsersAdmins = sec.Key("MAKE_AUTO_REGISTERED_USERS_ADMINS").MustBool(false)
 	Service.EnableCaptcha = sec.Key("ENABLE_CAPTCHA").MustBool()
 }
 

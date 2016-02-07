@@ -105,6 +105,7 @@ func SignedInUser(ctx *macaron.Context, sess session.Store) (*models.User, bool)
 							Email:    uuid.NewV4().String() + "@localhost",
 							Passwd:   webAuthUser,
 							IsActive: true,
+							IsAdmin:  setting.Service.MakeAutoRegisteredUsersAdmins,
 						}
 						if err = models.CreateUser(u); err != nil {
 							// FIXME: should I create a system notice?
